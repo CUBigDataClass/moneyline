@@ -8,9 +8,9 @@ services:
       - ./database/config/redis.conf:/redis.conf
     command: [ "redis-server", "/redis.conf"]
   scripts:
-    build: ./scripts
+    build: ./script_runner
     volumes:
-      - ./scripts:/opt/scripts
+      - ./script_runner/scripts:/opt/scripts
     stdin_open: true
     tty: true
     
