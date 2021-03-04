@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  redis:
+    image: redis:6.2.1
+    ports:
+      - 6379:6379
+    volumes:
+      - ./database/config/redis.conf:/redis.conf
+    command: [ "redis-server", "/redis.conf"]
+  scripts:
+    build: ./scripts
+    volumes:
+      - ./scripts:/opt/scripts
+    stdin_open: true
+    tty: true
+    
