@@ -6,7 +6,8 @@ services:
       - 6379:6379
     volumes:
       - ./database/config/redis.conf:/redis.conf
-    command: [ "redis-server", "/redis.conf"]
+      - ./database/data:/data
+    entrypoint: redis-server /redis.conf
   scripts:
     build: ./script_runner
     volumes:
