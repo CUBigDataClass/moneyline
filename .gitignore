@@ -1,0 +1,3 @@
+*.rdb
+*.aof
+script_runner/scripts/api_key.txt
