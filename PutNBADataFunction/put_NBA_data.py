@@ -8,32 +8,33 @@ from datetime import timedelta,datetime
 
 conn = boto3.resource('dynamodb', region_name= 'us-east-2',aws_access_key_id='', aws_secret_access_key='')
 TABLE_NAME = 'nba'
-table = conn.Table(name=TABLE_NAME)
 
-# table = conn.create_table(
-#         TableName=TABLE_NAME,
-#         KeySchema=[
-#             {
-#                 'AttributeName': 'uuid',
-#                 'KeyType': 'HASH'  # Partition key
-#             },
-#         ],
-#         AttributeDefinitions=[
-#             {
-#                 'AttributeName': 'uuid',
-#                 'AttributeType': 'S'
-#             },
+def create_table():
+    table = conn.create_table(
+            TableName=TABLE_NAME,
+            KeySchema=[
+                {
+                    'AttributeName': 'uuid',
+                    'KeyType': 'HASH'  # Partition key
+                },
+            ],
+            AttributeDefinitions=[
+                {
+                    'AttributeName': 'uuid',
+                    'AttributeType': 'S'
+                },
 
-#         ],
-#         ProvisionedThroughput={
-#             'ReadCapacityUnits': 1,
-#             'WriteCapacityUnits': 1
-#         }
-#     )
-# table.wait_until_exists()
-# print("Table status:", table.table_status)
+            ],
+            ProvisionedThroughput={
+                'ReadCapacityUnits': 1,
+                'WriteCapacityUnits': 1
+            }
+        )
+    table.wait_until_exists()
+    return table
 
 def init_populate():
+    table = create_table()
     try:
         r =  leaguegamefinder.LeagueGameFinder(date_from_nullable='07/22/2020', league_id_nullable='00').get_normalized_dict()
         entries = len(r['LeagueGameFinderResults'])
@@ -52,6 +53,7 @@ def init_populate():
 
     
 def put_nightly_data():
+    table = conn.Table(name=TABLE_NAME)
     date = datetime.today() - timedelta(days=1)
     dt_string = str(date.strftime("%m/%d/%Y "))
 
