@@ -32,5 +32,3 @@ Use:
     1. Open a new terminal window, and execute dynamodb-admin
     2. Go to localhost:8001
 
-
-* **Stack Name**:
