@@ -7,7 +7,8 @@ from nba_api.stats.static import teams
 from datetime import timedelta,datetime
 
 # conn = boto3.resource('dynamodb', region_name= 'us-east-2',aws_access_key_id='', aws_secret_access_key='')
-conn = boto3.resource('dynamodb', endpoint_url="http://host.docker.internal:8000/")
+#conn = boto3.resource('dynamodb', endpoint_url="http://host.docker.internal:8000/")
+conn = boto3.resource('dynamodb')
 TABLE_NAME = 'nba'
 
 def create_table():
@@ -26,7 +27,7 @@ def create_table():
                     AttributeDefinitions=[
                         # {'AttributeName': 'uuid','AttributeType': 'S'},
                         {'AttributeName': 'GAME_ID', 'AttributeType': 'S'},
-                        {'AttributeName': 'TEAM_ID', 'AttributeType': 'N'}
+                        {'AttributeName': 'TEAM_ID', 'AttributeType': 'S'}
                     ],
                     ProvisionedThroughput={
                         'ReadCapacityUnits': 1,
@@ -42,17 +43,16 @@ def create_table():
 
 def init_populate(event, context):
     table = create_table()
-
     try:
-        r = leaguegamefinder.LeagueGameFinder(date_from_nullable='03/11/2021', league_id_nullable='00').get_normalized_dict()
+        r = leaguegamefinder.LeagueGameFinder(date_from_nullable='07/22/2020', league_id_nullable='00').get_normalized_dict()
         entries = len(r['LeagueGameFinderResults'])
         counter = 1
+
         for x in r['LeagueGameFinderResults']:
-            # uid = str(uuid.uuid4())
             x = json.loads(json.dumps(x), parse_float=str)
-            # x['uuid'] = uid
             try:
                 table.put_item(Item=x)
+
             except Exception as e:
                 #check for duplicate data
                 pass
@@ -62,7 +62,6 @@ def init_populate(event, context):
     except Exception as e:
         print(e)
 
-    
 def put_nightly_data():
     table = conn.Table(name=TABLE_NAME)
     date = datetime.today() - timedelta(days=1)

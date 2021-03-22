@@ -18,3 +18,6 @@ Resources:
       CodeUri: PutNBADataFunction/
       Handler: put_NBA_data.init_populate
       Runtime: python3.8
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AmazonDynamoDBFullAccess
