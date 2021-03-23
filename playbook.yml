@@ -9,6 +9,7 @@
 
   - name: Create daily cron job at 8 am to keep data up to date
     cron:
+      name: Update NBA table with last nights games
       minute: 0
       hour: 8
       day: "*"
