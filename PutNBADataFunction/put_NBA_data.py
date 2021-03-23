@@ -1,30 +1,28 @@
 import json
 import boto3
 import uuid
-from nba_api.stats.endpoints import boxscoretraditionalv2
 from nba_api.stats.endpoints import leaguegamefinder
-from nba_api.stats.static import teams
 from datetime import timedelta,datetime
 
-# conn = boto3.resource('dynamodb', region_name= 'us-east-2',aws_access_key_id='', aws_secret_access_key='')
-conn = boto3.resource('dynamodb', endpoint_url="http://host.docker.internal:8000/")
+
+dynamo_conn = boto3.resource('dynamodb', region_name= 'us-east-2',aws_access_key_id='', aws_secret_access_key='')
+# conn = boto3.resource('dynamodb', endpoint_url="http://host.docker.internal:8000/")
 TABLE_NAME = 'nba'
 
 def create_table():
     try:
-        table_names = [table.name for table in conn.tables.all()]
+        table_names = [table.name for table in dynamo_conn.tables.all()]
         if TABLE_NAME in table_names:
-            table = conn.Table(TABLE_NAME)
+            table = dynamo_conn.Table(TABLE_NAME)
         else:
-            table = conn.create_table(
+            table = dynamo_conn.create_table(
                     TableName=TABLE_NAME,
                     KeySchema=[
-                        # {'AttributeName': 'uuid', 'KeyType': 'HASH'  # Partition key },
+
                         {'AttributeName': 'GAME_ID', 'KeyType': 'HASH'},
                         {'AttributeName': 'TEAM_ID', 'KeyType': 'RANGE'}
                     ],
                     AttributeDefinitions=[
-                        # {'AttributeName': 'uuid','AttributeType': 'S'},
                         {'AttributeName': 'GAME_ID', 'AttributeType': 'S'},
                         {'AttributeName': 'TEAM_ID', 'AttributeType': 'N'}
                     ],
@@ -40,17 +38,15 @@ def create_table():
 
     return table
 
-def init_populate(event, context):
+def init_populate():
     table = create_table()
-
+    return
     try:
         r = leaguegamefinder.LeagueGameFinder(date_from_nullable='03/11/2021', league_id_nullable='00').get_normalized_dict()
         entries = len(r['LeagueGameFinderResults'])
         counter = 1
         for x in r['LeagueGameFinderResults']:
-            # uid = str(uuid.uuid4())
             x = json.loads(json.dumps(x), parse_float=str)
-            # x['uuid'] = uid
             try:
                 table.put_item(Item=x)
             except Exception as e:
@@ -64,7 +60,7 @@ def init_populate(event, context):
 
     
 def put_nightly_data():
-    table = conn.Table(name=TABLE_NAME)
+    table = dynamo_conn.Table(name=TABLE_NAME)
     date = datetime.today() - timedelta(days=1)
     dt_string = str(date.strftime("%m/%d/%Y "))
 
@@ -73,9 +69,13 @@ def put_nightly_data():
         dt_string = dt_string[1:]
     r =  leaguegamefinder.LeagueGameFinder(date_from_nullable=dt_string, league_id_nullable='00').get_normalized_dict()
     for x in r['LeagueGameFinderResults']:
-            uid = str(uuid.uuid4())
-            x = json.loads(json.dumps(x), parse_float=str)
-            x['uuid'] = uid
+        x = json.loads(json.dumps(x), parse_float=str)
+        try:
             table.put_item(Item=x)
+        except Exception as e:
+            #check for duplicate data
+            pass
+
+
 
 
