@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from datetime import timedelta,datetime
 import json
 import boto3

@@ -39,9 +39,8 @@ def create_table():
 
 def init_populate():
     table = create_table()
-    return
     try:
-        r = leaguegamefinder.LeagueGameFinder(date_from_nullable='03/11/2021', league_id_nullable='00').get_normalized_dict()
+        r = leaguegamefinder.LeagueGameFinder(date_from_nullable='08/11/2020', league_id_nullable='00').get_normalized_dict()
         entries = len(r['LeagueGameFinderResults'])
         counter = 1
         for x in r['LeagueGameFinderResults']:

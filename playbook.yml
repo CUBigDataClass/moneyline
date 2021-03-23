@@ -6,3 +6,17 @@
     pip:
       executable: pip3
       requirements: "{{ lookup('env','PWD') }}/PutNBADataFunction/requirements.txt"
+
+  - name: Create daily cron job at 8 am to keep data up to date
+    cron:
+      minute: 0
+      hour: 8
+      day: "*"
+      month: "*"
+      weekday: "*"
+      job: python3 "{{ lookup('env','PWD') }}/PutNBADataFunction/add_daily.py"
+
+  - name: Run script to create dynamoDB table and populate
+    command: python3 "{{ lookup('env','PWD') }}/PutNBADataFunction/put_NBA_data.py"
+
+
