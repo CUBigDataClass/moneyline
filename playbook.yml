@@ -1,0 +1,8 @@
+---
+- name: Setup project
+  hosts: localhost
+  tasks:
+  - name: Install specified python requirements
+    pip:
+      executable: pip3
+      requirements: "{{ lookup('env','PWD') }}/PutNBADataFunction/requirements.txt"
