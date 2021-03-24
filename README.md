@@ -6,8 +6,15 @@ Team Moneyline sports betting app.
 
 
 - Install ansible:
+
+Linux:
 ```
 sudo apt install ansible
+```
+
+Unix: 
+```
+sudo pip install ansible
 ```
 
 - Insert AWS creds into PutNBADataFunction/put_NBA_data.py and PutNBADataFunction/add_daily.py
