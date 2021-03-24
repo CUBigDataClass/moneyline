@@ -3,7 +3,7 @@ Team Moneyline sports betting app.
 
 
 ## If you want to set up local version:
-
+- Make sure pip3 and python3 are installed on your system
 
 - Install ansible:
 
