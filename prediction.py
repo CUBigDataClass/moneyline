@@ -9,12 +9,15 @@ from boto3.dynamodb.conditions import Key
 import pandas as pd
 import numpy as np
 from feat_calc import *
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
 
 TABLE_NAME='nba'
 
 def query_games(year):
     #DON'T COMMIT WITH AWS KEYS!!!!
-    dynamo_conn = boto3.resource('dynamodb', region_name='us-east-2', aws_access_key_id='', aws_secret_access_key='')
+    dynamo_conn = boto3.resource('dynamodb', region_name='us-east-2', aws_access_key_id='AKIAU3SZVQWPSIWOCIUQ', aws_secret_access_key='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')
     table = dynamo_conn.Table(TABLE_NAME)
     scan_kwargs = {
         'FilterExpression': Key('GAME_DATE').begins_with(year)
@@ -72,22 +75,48 @@ def extract_features(df, matchup, date):
 
     return feat_dict
 
-def split_data():
-    #split into training and testing
-    return 0
-
-def train_model():
+def train_model(X, y):
     #return a trained classifier
-    return 0
+    clf = RandomForestClassifier(n_estimators=500, random_state=42)
+    clf.fit(X, y)
+    return clf
 
-def predict_winner():
+def test_model(clf, X, y_true):
+    #test a trained model on labeled testing data
+    y_pred = clf.predict(X)
+    return accuracy_score(y_true, y_pred)
+
+def predict_winner(home, away):
     #return if home team will win (True) or lose (False)
     return 0
 
 if __name__=='__main__':
-    query_year = '2020'
-    games = query_games(query_year)
+    games20 = query_games('2020')
+    games21 = query_games('2021')
+
+    games = games20.append(games21)
     #test = games.loc[(games['GAME_ID'] == '0022000004') & (games['TEAM_NAME'] == "Phoenix Suns")]
-    test = extract_features(games, 'DAL @ PHX', '2020-12-23')
+    #test = extract_features(games, 'DAL @ PHX', '2020-12-23')
+
+    used_ids = []
+    feat_dicts = []
     
-    print(test)
+    for i, row in games.iterrows():
+        if row['GAME_DATE'][:4] == '2021':
+            if row['GAME_ID'] not in used_ids:
+                #print(row['MATCHUP'])
+                new_feats = extract_features(games, row['MATCHUP'], row['GAME_DATE'])
+                feat_dicts.append(new_feats)
+                used_ids.append(row['GAME_ID'])
+
+    feat_df = pd.DataFrame(feat_dicts)
+
+    labels = feat_df['HOME_WIN']
+    feats = feat_df.loc[:, feat_df.columns != 'HOME_WIN']
+
+    X_train, X_test, y_train, y_test = train_test_split(feats, labels, test_size=0.20, random_state=42)
+
+    model = train_model(X_train, y_train)
+    test_acc = test_model(model, X_test, y_test)
+
+    print(test_acc)
