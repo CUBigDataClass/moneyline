@@ -94,7 +94,7 @@ def extract_features_predict(df, home, away):
 
 def train_model(X, y):
     #return a trained classifier
-    clf = RandomForestClassifier(n_estimators=500, random_state=42)
+    clf = RandomForestClassifier(n_estimators=1000, random_state=42)
     clf.fit(X, y)
     return clf
 
