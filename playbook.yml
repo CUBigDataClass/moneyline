@@ -1,0 +1,23 @@
+---
+- name: Setup project
+  hosts: localhost
+  tasks:
+  - name: Install specified python requirements
+    pip:
+      executable: pip3
+      requirements: "{{ lookup('env','PWD') }}/PutNBADataFunction/requirements.txt"
+
+  - name: Create daily cron job at 8 am to keep data up to date
+    cron:
+      name: Update NBA table with last nights games
+      minute: 0
+      hour: 10
+      day: "*"
+      month: "*"
+      weekday: "*"
+      job: python3 "{{ lookup('env','PWD') }}/PutNBADataFunction/add_daily.py"
+
+  - name: Run script to create dynamoDB table and populate
+    command: python3 "{{ lookup('env','PWD') }}/PutNBADataFunction/put_NBA_data.py"
+
+
