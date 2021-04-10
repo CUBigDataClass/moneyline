@@ -3,7 +3,6 @@ import boto3
 from nba_api.stats.endpoints import leaguegamefinder
 
 
-
 dynamo_conn = boto3.resource('dynamodb', region_name= 'us-east-2',aws_access_key_id='', aws_secret_access_key='')
 # conn = boto3.resource('dynamodb', endpoint_url="http://host.docker.internal:8000/")
 TABLE_NAME = 'nba'
@@ -26,8 +25,8 @@ def create_table():
                         {'AttributeName': 'TEAM_ID', 'AttributeType': 'N'}
                     ],
                     ProvisionedThroughput={
-                        'ReadCapacityUnits': 10,
-                        'WriteCapacityUnits': 10
+                        'ReadCapacityUnits': 1,
+                        'WriteCapacityUnits': 1
                     }
                 )
         table.wait_until_exists()
@@ -57,8 +56,6 @@ def init_populate():
         print(e)
 
     
-
-
 
 if __name__ == "__main__":
     init_populate()
