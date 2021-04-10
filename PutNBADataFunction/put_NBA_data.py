@@ -25,8 +25,8 @@ def create_table():
                         {'AttributeName': 'TEAM_ID', 'AttributeType': 'N'}
                     ],
                     ProvisionedThroughput={
-                        'ReadCapacityUnits': 1,
-                        'WriteCapacityUnits': 1
+                        'ReadCapacityUnits': 10,
+                        'WriteCapacityUnits': 10
                     }
                 )
         table.wait_until_exists()
