@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient , HttpHeaders, HttpParams} from '@angular/common/http';
+import { HttpClient , HttpParams} from '@angular/common/http';
 
 interface info {
   current_page: Number;
@@ -25,7 +25,7 @@ interface game {
   period: Number;
   postseason: Boolean;
   season: Number;
-  status: Date;
+  status: String;
   time: String,
   visitor_team: {
       id: Number;
@@ -54,7 +54,6 @@ export class MatchupService {
   async getGames(){
     let today = new Date();
     let todayStr = today.getFullYear() + '-' + (today.getMonth()+1).toString() + '-' + today.getDate();
-    console.log(todayStr);
     let params = new HttpParams().set('start_date', todayStr ).set('end_date', todayStr );
     const url = 'api/games';
     const res = await this.http.get<res>(url, {params:params} ).toPromise();

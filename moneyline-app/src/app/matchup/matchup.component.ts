@@ -15,6 +15,9 @@ export class MatchupComponent implements OnInit {
   @Input()
   team2!: String;
 
+  @Input()
+  status!: String;
+
   teams = ['nuggets', 'spurs', 'mavs', 'wolves', 'warriors', '76ers', 'lakers' , 'celtics',
   'jazz', 'suns', 'pels', 'kings', 'rockets', 'heat','bucks', 'hawks', 'nets', 'clippers', 'pistons',
   'knicks', 'bulls', 'blazers', 'hornets','wizards', 'cavs', 'thunder', 'pacers', 'griz','magic'];
@@ -23,9 +26,6 @@ export class MatchupComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.matchupService.getGames().subscribe(
-    //   x => console.log('Observer got a next value: ' + x)
-    // );
   }
 
 }

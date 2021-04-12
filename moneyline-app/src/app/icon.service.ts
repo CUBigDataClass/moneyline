@@ -25,7 +25,6 @@ export class IconService {
 
   private loadIcons(iconKeys: string[], iconUrl: string): void {
     for (let key in this.teams) {
-      console.log('../'+`${iconUrl}/${this.teams[key]}.svg`);
       this.matIconRegistry.addSvgIcon(key, this.domSanitizer.bypassSecurityTrustResourceUrl('../'+`${iconUrl}/${this.teams[key]}.svg`));
     };
   }
