@@ -3,8 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MatchupComponent } from './matchup/matchup.component';
 import { MatchupModule } from './matchup/matchup.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { IconService } from './icon.service';
 
 @NgModule({
   declarations: [
@@ -13,9 +14,10 @@ import { MatchupModule } from './matchup/matchup.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MatchupModule
+    MatchupModule,
+    BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [IconService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
