@@ -1,0 +1,11 @@
+{
+    "/api": {
+    "target": "https://balldontlie.io/api/v1",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}

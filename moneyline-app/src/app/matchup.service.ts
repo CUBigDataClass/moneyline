@@ -19,7 +19,7 @@ export class MatchupService {
     // headers = headers
     // headers.append("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
     // headers.append("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-    const url = 'https://balldontlie.io/api/v1/games';
+    const url = 'api/games';
     let options = {
       headers: headers, 
       params: params
