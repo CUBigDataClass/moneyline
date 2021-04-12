@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { MatchupModule } from './matchup/matchup.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IconService } from './icon.service';
+import { MatchupService } from './matchup.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -15,9 +17,13 @@ import { IconService } from './icon.service';
     BrowserModule,
     AppRoutingModule,
     MatchupModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
-  providers: [IconService],
+  providers: [
+    IconService,
+    MatchupService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

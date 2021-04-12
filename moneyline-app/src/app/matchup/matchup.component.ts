@@ -1,6 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IconService } from '../icon.service';
-import { MatchupService } from './matchup.service';
 
 @Component({
   selector: 'app-matchup',
@@ -22,9 +20,6 @@ export class MatchupComponent implements OnInit {
   'knicks', 'bulls', 'blazers', 'hornets','wizards', 'cavs', 'thunder', 'pacers', 'griz','magic'];
 
   constructor(
-    private matchupService : MatchupService,
-    private iconService: IconService
-    
   ) { }
 
   ngOnInit(): void {

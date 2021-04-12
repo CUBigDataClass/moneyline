@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
 import { IconService } from './icon.service';
+import { MatchupService } from './matchup.service';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +11,12 @@ import { IconService } from './icon.service';
 export class AppComponent {
   title = 'moneyline-app';
   constructor(
-    private iconService: IconService
+    private iconService: IconService,
+    private matchupService : MatchupService
   ){
     this.iconService.registerIcons();
+    this.matchupService.getGames().subscribe(
+      x => console.log('Observer got a next value: ' + x)
+    );
   }
 }
