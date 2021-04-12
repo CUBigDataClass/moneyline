@@ -1,6 +1,48 @@
 import { Injectable } from '@angular/core';
 import { HttpClient , HttpHeaders, HttpParams} from '@angular/common/http';
 
+interface info {
+  current_page: Number;
+  next_page: Number;
+  per_page: Number;
+  total_count: Number;
+  total_pages:Number;
+}
+
+interface game {
+  id: Number;
+  date: Date;
+  home_team: {
+      id: 29,
+      abbreviation: String;
+      city: String;
+      conference: String;
+      division: String;
+      full_name: String;
+      name: String;
+  },
+  home_team_score: Number;
+  period: Number;
+  postseason: Boolean;
+  season: Number;
+  status: Date;
+  time: String,
+  visitor_team: {
+      id: Number;
+      abbreviation: String;
+      city: String;
+      conference: String;
+      division: String;
+      full_name: String;
+      name: String;
+  },
+  visitor_team_score: Number;
+}
+
+interface res {
+  data: Array<game>;
+  meta: info;
+}
 
 @Injectable()
 export class MatchupService {
@@ -9,22 +51,15 @@ export class MatchupService {
     private http: HttpClient
   ) { }
   
-  getGames(){
+  async getGames(){
     let today = new Date();
-    let todayStr = today.getFullYear() + '-' + today.getMonth() + '-' + today.getDay();
+    let todayStr = today.getFullYear() + '-' + (today.getMonth()+1).toString() + '-' + today.getDate();
     console.log(todayStr);
-    let params = new HttpParams().set('start_date', todayStr );
-    let headers = new HttpHeaders().set("Access-Control-Allow-Origin", "*");
-    console.log(headers.keys());
-    // headers = headers
-    // headers.append("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
-    // headers.append("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+    let params = new HttpParams().set('start_date', todayStr ).set('end_date', todayStr );
     const url = 'api/games';
-    let options = {
-      headers: headers, 
-      params: params
-    }
-    return this.http.get(url, options );
+    const res = await this.http.get<res>(url, {params:params} ).toPromise();
+    
+    return res.data;
   
    }
   }
