@@ -8,6 +8,7 @@ from boto3.dynamodb.conditions import Key
 import pandas as pd
 import numpy as np
 from feat_calc import *
+from put_prediction_data import *
 from sklearn.model_selection import train_test_split
 from sklearn import svm
 from sklearn.ensemble import RandomForestClassifier
@@ -15,7 +16,7 @@ from sklearn.metrics import accuracy_score
 TABLE_NAME='nba'
 def query_games(year):
     #DON'T COMMIT WITH AWS KEYS!!!!
-    dynamo_conn = boto3.resource('dynamodb', region_name='us-east-2', aws_access_key_id='', aws_secret_access_key='')
+    dynamo_conn = boto3.resource('dynamodb', region_name='us-west-2', aws_access_key_id='', aws_secret_access_key='')
     table = dynamo_conn.Table(TABLE_NAME)
     scan_kwargs = {
         'FilterExpression': Key('GAME_DATE').begins_with(year)
@@ -120,18 +121,21 @@ if __name__=='__main__':
         if row['GAME_DATE'][:4] == '2021':
             if row['GAME_ID'] not in used_ids:
                 #print(row['MATCHUP'])
+
                 try:
                     new_feats = extract_features_train(games, row['MATCHUP'], row['GAME_DATE'])
                     feat_dicts.append(new_feats)
                     used_ids.append(row['GAME_ID'])
                 except Exception as e:
                     print(e)
+
     #Convert list of dictionaries to dataframe
     feat_df = pd.DataFrame(feat_dicts)
     #Separate the labels from the features
     labels = feat_df['HOME_WIN']
     feats = feat_df.loc[:, feat_df.columns != 'HOME_WIN']
     #Split into training and testing
+
     avg = 0
     for i in range(20):
         X_train, X_test, y_train, y_test = train_test_split(feats, labels, test_size=0.20,random_state = i)
