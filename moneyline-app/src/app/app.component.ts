@@ -21,7 +21,7 @@ export class AppComponent {
     this.iconService.registerIcons();
     this.matchupService.getGames().then((games)=>{
       this.todayGames = games;
-    });
+    }).catch(err => console.log(err));
   }
 }
 
