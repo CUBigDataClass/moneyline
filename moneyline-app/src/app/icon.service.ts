@@ -6,7 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class IconService {
 
   teams: { [index: string]: any; } = {'DEN': 'nuggets', 'SAS' : 'spurs', 'DAL': 'mavs', 'MIN':'wolves',
-  'GSW' : 'warriors', 'PHI':'76ers', 'LAL' :'lakers' ,
+  'GSW' : 'warriors', 'PHI':'76ers', 'LAL' :'lakers' , 'TOR': 'raptors',
    'BOS':'celtics', 'UTA': 'jazz', 'PHX' : 'suns', 'NOP': 'pels', 
    'SAC':'kings', 'HOU': 'rockets', 'MIA': 'heat','MIL': 'bucks', 
    'ATL': 'hawks','BKN' :'nets', 'LAC' : 'clippers', 'DET' :'pistons',

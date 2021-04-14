@@ -20,9 +20,7 @@ export class AppComponent {
   ){
     this.iconService.registerIcons();
     this.matchupService.getGames().then((games)=>{
-      // sort list based on status field which is time of tipoff
-      let sorted = games.sort((a, b) => Number(a.status.split(":")[0]+a.status.split(":")[1].substring(0,2)) > Number(b.status.split(":")[0]+b.status.split(":")[1].substring(0,2)) ? 1 : -1);
-      this.todayGames = sorted;
+      this.todayGames = games;
     });
   }
 }
