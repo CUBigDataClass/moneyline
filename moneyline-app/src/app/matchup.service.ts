@@ -55,10 +55,9 @@ export class MatchupService {
     let today = new Date();
     let todayStr = today.getFullYear() + '-' + (today.getMonth()+1).toString() + '-' + today.getDate();
     let params = new HttpParams().set('start_date', todayStr ).set('end_date', todayStr );
-    // const url = 'api/games';
-    const url = 'https://balldontlie.io/api/v1/games';
+    const url = 'api/games';
     const res = await this.http.get<res>(url, {params:params} ).toPromise();
-    
+    console.log(res)
     return res.data;
   
    }
