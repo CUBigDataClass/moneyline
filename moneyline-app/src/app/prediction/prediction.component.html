@@ -7,6 +7,11 @@
                 <br>
                 <mat-icon svgIcon= {{team1}} style="transform: scale(4);"></mat-icon>
             </div>
+            <div class="column">
+                <mat-card-subtitle>Probability</mat-card-subtitle>
+                <br>
+                <mat-card-title>{{team1 === winner ? confidence : (1 - confidence)}}</mat-card-title>
+            </div>
         </div>
     </mat-card-content>
 </mat-card>
@@ -20,6 +25,11 @@
                 <mat-card-title>{{team2}}</mat-card-title>
                 <br>
                 <mat-icon svgIcon= {{team2}} style="transform: scale(4);"></mat-icon>
+            </div>
+            <div class="column">
+                <mat-card-subtitle>Probability</mat-card-subtitle>
+                <br>
+                <mat-card-title>{{team2 === winner ? confidence : (1 - confidence)}}</mat-card-title>
             </div>
         </div>
     </mat-card-content>

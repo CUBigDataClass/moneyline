@@ -66,7 +66,7 @@ export class MatchupService {
   getPrediction(){
     // const url = 'enter api in here'
     // const res = await this.http.get<
-    return {team1: "DEN", team2: "TOR", prediction: 0.6, winner: "DEN"}
+    return {team1: "DEN", team2: "TOR", confidence: 0.6, winner: "DEN"}
   }
   }
 

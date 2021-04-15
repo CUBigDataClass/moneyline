@@ -12,7 +12,7 @@ export class PredictionComponent implements OnInit {
 
   team2!: String;
 
-  prediction!: Number;
+  confidence!: number;
 
   winner!: String;
 
@@ -24,7 +24,7 @@ export class PredictionComponent implements OnInit {
     let res = this.matchupService.getPrediction()
     this.team1 = res.team1
     this.team2 = res.team2
-    this.prediction = res.prediction
+    this.confidence = res.confidence
     this.winner = res.winner
   }
 

@@ -16,10 +16,10 @@ export class MatchupComponent implements OnInit {
   team2!: String;
 
   @Input()
-  team1score!: Number;
+  team1score!: number;
 
   @Input()
-  team2score!: Number;
+  team2score!: number;
 
   @Input()
   status!: String;
