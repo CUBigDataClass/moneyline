@@ -29,7 +29,6 @@ export class AppComponent {
   }
   prediction(){
     let dialogRef = this.dialog.open(PredictionComponent, {
-      height: '400px',
       width: '600px',
     });
   }

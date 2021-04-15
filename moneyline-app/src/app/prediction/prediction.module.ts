@@ -9,7 +9,7 @@ import { PredictionComponent } from './prediction.component';
   declarations: [],
   imports: [
     CommonModule,
-    PredictionComponent
+    PredictionComponent,
   ],
   providers: [
     MatchupService,

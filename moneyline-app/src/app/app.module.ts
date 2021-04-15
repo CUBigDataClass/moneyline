@@ -8,10 +8,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IconService } from './icon.service';
 import { MatchupService } from './matchup.service';
 import { HttpClientModule } from '@angular/common/http';
-import { MatCard } from '@angular/material/card';
+import { MatCard, MatCardModule } from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { PredictionComponent } from './prediction/prediction.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -26,7 +27,9 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
     BrowserAnimationsModule,
     HttpClientModule,
     MatToolbarModule,
-    MatDialogModule
+    MatDialogModule,
+    MatIconModule,
+    MatCardModule
   ],
   providers: [
     IconService,
