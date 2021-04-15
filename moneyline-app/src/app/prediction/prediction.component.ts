@@ -28,6 +28,15 @@ export class PredictionComponent implements OnInit {
     this.winner = res.winner
   }
 
+  getProb(team: String){
+    if (team === this.winner){
+      return (100*this.confidence).toFixed(2) + "%"
+    }
+    else{
+      return (100*(1 - this.confidence)).toFixed(2) + "%"
+    }
+  }
+
   getLines(team: String){
     var p
 
@@ -39,10 +48,10 @@ export class PredictionComponent implements OnInit {
     }
 
     if (p > 0.5){
-      return Math.round(-100 / (1/p - 1))
+      return (-100 / (1/p - 1)).toFixed(0)
     }
     else{
-      return Math.round(100 * (1/p - 1))
+      return "+" + (100 * (1/p - 1)).toFixed(0)
     }
   }
 
