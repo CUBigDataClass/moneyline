@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IconService } from './icon.service';
 import { MatchupService } from './matchup.service';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { PredictionComponent } from './prediction/prediction.component';
+
 
 @Component({
   selector: 'app-root',
@@ -16,12 +19,19 @@ export class AppComponent {
   title = 'moneyline-app';
   constructor(
     private iconService: IconService,
-    private matchupService : MatchupService
+    private matchupService : MatchupService,
+    private dialog: MatDialog
   ){
     this.iconService.registerIcons();
     this.matchupService.getGames().then((games)=>{
       this.todayGames = games;
     }).catch(err => console.log(err));
+  }
+  prediction(){
+    let dialogRef = this.dialog.open(PredictionComponent, {
+      height: '400px',
+      width: '600px',
+    });
   }
 }
 
