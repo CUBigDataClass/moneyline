@@ -28,4 +28,22 @@ export class PredictionComponent implements OnInit {
     this.winner = res.winner
   }
 
+  getLines(team: String){
+    var p
+
+    if (team === this.winner){
+      p = this.confidence
+    }
+    else{
+      p = 1 - this.confidence
+    }
+
+    if (p > 0.5){
+      return Math.round(-100 / (1/p - 1))
+    }
+    else{
+      return Math.round(100 * (1/p - 1))
+    }
+  }
+
 }

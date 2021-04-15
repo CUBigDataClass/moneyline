@@ -10,7 +10,12 @@
             <div class="column">
                 <mat-card-subtitle>Probability</mat-card-subtitle>
                 <br>
-                <mat-card-title>{{team1 === winner ? confidence : (1 - confidence)}}</mat-card-title>
+                <mat-card-title>{{team1 === winner ? 100*confidence + "%" : 100*(1 - confidence) + "%"}}</mat-card-title>
+            </div>
+            <div class="column">
+                <mat-card-subtitle>Moneyline</mat-card-subtitle>
+                <br>
+                <mat-card-title>{{getLines(team1) > 0 ? "+" + getLines(team1) : getLines(team1)}}</mat-card-title>
             </div>
         </div>
     </mat-card-content>
@@ -29,7 +34,12 @@
             <div class="column">
                 <mat-card-subtitle>Probability</mat-card-subtitle>
                 <br>
-                <mat-card-title>{{team2 === winner ? confidence : (1 - confidence)}}</mat-card-title>
+                <mat-card-title>{{team2 === winner ? 100*confidence+"%" : 100*(1 - confidence) + "%"}}</mat-card-title>
+            </div>
+            <div class="column">
+                <mat-card-subtitle>Moneyline</mat-card-subtitle>
+                <br>
+                <mat-card-title>{{getLines(team2) > 0 ? "+" + getLines(team2) : getLines(team2)}}</mat-card-title>
             </div>
         </div>
     </mat-card-content>
