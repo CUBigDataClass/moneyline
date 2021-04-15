@@ -1,0 +1,13 @@
+.row {
+    display: flex;
+  }
+  
+  .column {
+    flex: 50%;
+    text-align: center;
+  }
+
+  ::ng-deep .mat-card{
+    border: 5px solid #000;
+    border-radius: 30px !important;
+   }
