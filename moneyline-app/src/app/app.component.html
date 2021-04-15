@@ -4,6 +4,8 @@
 <div *ngIf = "todayGames.length > 0">
     <div *ngFor = "let g of todayGames">
         <app-matchup [team1] = g.home_team.abbreviation [team2] = g.visitor_team.abbreviation
+        [team1score] = g.home_team_score
+        [team2score] = g.visitor_team_score
         [status] = g.status></app-matchup>
     </div>
 </div> 

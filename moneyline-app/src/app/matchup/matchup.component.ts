@@ -16,6 +16,12 @@ export class MatchupComponent implements OnInit {
   team2!: String;
 
   @Input()
+  team1score!: Number;
+
+  @Input()
+  team2score!: Number;
+
+  @Input()
   status!: String;
 
   teams = ['nuggets', 'spurs', 'mavs', 'wolves', 'warriors', '76ers', 'lakers' , 'celtics',
