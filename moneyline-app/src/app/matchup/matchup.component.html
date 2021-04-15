@@ -8,6 +8,8 @@
     </div>
     <div class= "column">
       <mat-card-title>{{team1score}}</mat-card-title>
+      <br>
+      <mat-card-title>{{status === "Final" && team1score > team2score ? "W" : ""}}</mat-card-title>
     </div>
     <div class= "column">
       <mat-card-title>VS</mat-card-title>
@@ -16,6 +18,8 @@
     </div>
     <div class= "column">
       <mat-card-title>{{team2score}}</mat-card-title>
+      <br>
+      <mat-card-title>{{status === "Final" && team1score < team2score ? "W" : ""}}</mat-card-title>
     </div>
     <div class= "column">
       <mat-card-title>{{team2}}</mat-card-title>
