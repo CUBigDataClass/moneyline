@@ -12,7 +12,7 @@ export class PredictionComponent implements OnInit {
 
   team2!: String;
 
-  confidence!: number;
+  confidence!: Number;
 
   winner!: String;
 
@@ -30,10 +30,10 @@ export class PredictionComponent implements OnInit {
 
   getProb(team: String){
     if (team === this.winner){
-      return (100*this.confidence).toFixed(2) + "%"
+      return (100*this.confidence.valueOf()).toFixed(2) + "%"
     }
     else{
-      return (100*(1 - this.confidence)).toFixed(2) + "%"
+      return (100*(1 - this.confidence.valueOf())).toFixed(2) + "%"
     }
   }
 
@@ -41,10 +41,10 @@ export class PredictionComponent implements OnInit {
     var p
 
     if (team === this.winner){
-      p = this.confidence
+      p = this.confidence.valueOf()
     }
     else{
-      p = 1 - this.confidence
+      p = 1 - this.confidence.valueOf()
     }
 
     if (p > 0.5){
