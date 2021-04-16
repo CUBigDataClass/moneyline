@@ -2,7 +2,8 @@
 <app-matchup [team1] = "'nuggets'" [team2] = "'celtics'"></app-matchup>
 </div> -->
 <mat-toolbar>
-    <h1>Moneyline NBA Games</h1>
+    <span class="gap"><h1>Moneyline NBA Games</h1></span>
+    <button mat-raised-button><h1>Predict</h1></button>
 </mat-toolbar>
 <div *ngIf = "todayGames.length > 0">
     <div *ngFor = "let g of todayGames">

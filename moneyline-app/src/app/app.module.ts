@@ -13,6 +13,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { PredictionComponent } from './prediction/prediction.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button'
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatToolbarModule,
     MatDialogModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    MatButtonModule,
   ],
   providers: [
     IconService,
