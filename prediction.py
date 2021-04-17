@@ -18,7 +18,7 @@ TABLE_NAME='nba'
 
 def query_games(year):
     #DON'T COMMIT WITH AWS KEYS!!!!
-    dynamo_conn = boto3.resource('dynamodb', region_name='us-east-2', aws_access_key_id='AKIAU3SZVQWP2WJM3F76', aws_secret_access_key='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')
+    dynamo_conn = boto3.resource('dynamodb', region_name='us-east-2', aws_access_key_id='', aws_secret_access_key='')
     table = dynamo_conn.Table(TABLE_NAME)
     scan_kwargs = {
         'FilterExpression': Key('GAME_DATE').begins_with(year)
