@@ -18,7 +18,7 @@ TABLE_NAME='nba'
 
 def query_games(year):
     #DON'T COMMIT WITH AWS KEYS!!!!
-    dynamo_conn = boto3.resource('dynamodb', region_name='us-east-2', aws_access_key_id='', aws_secret_access_key='')
+    dynamo_conn = boto3.resource('dynamodb', region_name='us-east-2', aws_access_key_id='AKIAU3SZVQWPSL73LGUJ', aws_secret_access_key='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')
     table = dynamo_conn.Table(TABLE_NAME)
     scan_kwargs = {
         'FilterExpression': Key('GAME_DATE').begins_with(year)
@@ -109,68 +109,9 @@ def test_model(clf, X, y_true):
 def predict_winner(df, home, away, clf_trained):
     #return if home team will win (1) or lose (0)
     feats = extract_features_predict(df, home, away)
-    print('~~~~~~~~!!!!!FARTS!!!!~~~~~~~~~')
-    print('home: {}, away: {}'.format(home,away))
-    print(feats)
     pred = clf_trained.predict([feats])
     pred_proba = clf_trained.predict_proba([feats])
     if pred:
         return home, pred_proba[0][1]
     else:
         return away, pred_proba[0][0]
-
-if __name__=='__main__':
-    #Query 2020 and 2021 games
-    games20 = query_games('2020')
-    games21 = query_games('2021')
-    #Combine into one dataframe
-    games = games20.append(games21)
-
-    #Loop through every row of 2021 games and extract relevant features
-    used_ids = []
-    feat_dicts = []
-    for i, row in games.iterrows():
-        if row['GAME_DATE'][:4] == '2021':
-            if row['GAME_ID'] not in used_ids:
-                #print(row['MATCHUP'])
-                new_feats = extract_features_train(games, row['MATCHUP'], row['GAME_DATE'])
-                feat_dicts.append(new_feats)
-                used_ids.append(row['GAME_ID'])
-
-    #Convert list of dictionaries to dataframe
-    feat_df = pd.DataFrame(feat_dicts)
-
-    #Separate the labels from the features
-    labels = feat_df['HOME_WIN']
-    feats = feat_df.loc[:, feat_df.columns != 'HOME_WIN']
-
-    #Split into training and testing
-    X_train, X_test, y_train, y_test = train_test_split(feats, labels, test_size=0.20, random_state=50)
-
-    #Train the model on training set
-    model = train_model(X_train, y_train)
-    #Test on testing set to determine performance
-    # test_acc = test_model(model, X_test, y_test)
-    # print(test_acc)
-
-    #store_predict(games, model)
-
-    # home_exists = False
-    # while not home_exists:
-    #     home_team = input("Enter home team: ")
-    #     if len(games.loc[games['TEAM_ABBREVIATION'] == home_team]) == 0:
-    #         print("Home team does not exist. Try again.")
-    #     else:
-    #         home_exists = True
-    #
-    # away_exists = False
-    # while not away_exists:
-    #     away_team = input("Enter away team: ")
-    #     if len(games.loc[games['TEAM_ABBREVIATION'] == away_team]) == 0:
-    #         print("Away team does not exist. Try again.")
-    #     else:
-    #         away_exists = True
-    #
-    # winner, proba = predict_winner(games, home_team, away_team, model)
-    #
-    # print("Prediction: {} will win with {}% probability.".format(winner, proba*100))
