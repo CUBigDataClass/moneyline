@@ -78,7 +78,9 @@ def extract_features_train(df, matchup, date):
 
 def extract_features_predict(df, home, away):
     home_past = df.loc[df['TEAM_ABBREVIATION'] == home]
+    home_past = home_past.dropna()
     away_past = df.loc[df['TEAM_ABBREVIATION'] == away]
+    away_past = away_past.dropna()
 
     feat_list = [
         avg_ppg(home_past), #Points per game
@@ -107,6 +109,9 @@ def test_model(clf, X, y_true):
 def predict_winner(df, home, away, clf_trained):
     #return if home team will win (1) or lose (0)
     feats = extract_features_predict(df, home, away)
+    print('~~~~~~~~!!!!!FARTS!!!!~~~~~~~~~')
+    print('home: {}, away: {}'.format(home,away))
+    print(feats)
     pred = clf_trained.predict([feats])
     pred_proba = clf_trained.predict_proba([feats])
     if pred:
