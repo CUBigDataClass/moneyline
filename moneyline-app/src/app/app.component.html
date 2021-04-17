@@ -1,11 +1,16 @@
 <!-- <div style= "width: 50vh;">
 <app-matchup [team1] = "'nuggets'" [team2] = "'celtics'"></app-matchup>
 </div> -->
+<mat-toolbar>
+    <span class="gap"><h1>Moneyline NBA Games</h1></span>
+    <button mat-raised-button><h1>Predict</h1></button>
+</mat-toolbar>
 <div *ngIf = "todayGames.length > 0">
     <div *ngFor = "let g of todayGames">
         <app-matchup [team1] = g.home_team.abbreviation [team2] = g.visitor_team.abbreviation
         [team1score] = g.home_team_score
         [team2score] = g.visitor_team_score
-        [status] = g.status></app-matchup>
+        [status] = g.status
+        (click)="prediction()"></app-matchup>
     </div>
 </div> 

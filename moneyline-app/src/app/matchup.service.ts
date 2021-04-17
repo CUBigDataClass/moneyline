@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient , HttpParams} from '@angular/common/http';
+import { ThrowStmt } from '@angular/compiler';
 
 interface info {
   current_page: Number;
@@ -61,5 +62,11 @@ export class MatchupService {
     return res.data;
   
    }
+
+  getPrediction(){
+    // const url = 'enter api in here'
+    // const res = await this.http.get<
+    return {team1: "DEN", team2: "TOR", confidence: 0.7, winner: "DEN"}
+  }
   }
 

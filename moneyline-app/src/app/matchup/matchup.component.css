@@ -8,6 +8,6 @@
   }
 
   ::ng-deep .mat-card{
-    border: 5px solid #000;
-    border-radius: 30px !important;
+    /* border: 5px solid #000; */
+    /* border-radius: 30px !important; */
    }
