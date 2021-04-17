@@ -14,6 +14,7 @@ from sklearn import svm
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 TABLE_NAME='nba'
+
 def query_games(year):
     #DON'T COMMIT WITH AWS KEYS!!!!
     dynamo_conn = boto3.resource('dynamodb', region_name='us-west-2', aws_access_key_id='', aws_secret_access_key='')
@@ -146,22 +147,27 @@ if __name__=='__main__':
         print(test_acc)
         avg += test_acc
     print('Avg =',avg/20)
-    con = 1
-    while(con == 1):
-        home_exists = False
-        while not home_exists:
-            home_team = input("Enter home team: ")
-            if len(games.loc[games['TEAM_ABBREVIATION'] == home_team]) == 0:
-                print("Home team does not exist. Try again.")
-            else:
-                home_exists = True
-        away_exists = False
-        while not away_exists:
-            away_team = input("Enter away team: ")
-            if len(games.loc[games['TEAM_ABBREVIATION'] == away_team]) == 0:
-                print("Away team does not exist. Try again.")
-            else:
-                away_exists = True
-        winner, proba = predict_winner(games, home_team, away_team, model)
-        print("Prediction: {} will win with {}% probability.".format(winner, proba*100))
+
+    #call put_prediction_data.py to store in prediction DB
+    store_predict(games, model)
+
+    # to locally test prediction.py
+    # con = 1
+    # while(con == 1):
+    #     home_exists = False
+    #     while not home_exists:
+    #         home_team = input("Enter home team: ")
+    #         if len(games.loc[games['TEAM_ABBREVIATION'] == home_team]) == 0:
+    #             print("Home team does not exist. Try again.")
+    #         else:
+    #             home_exists = True
+    #     away_exists = False
+    #     while not away_exists:
+    #         away_team = input("Enter away team: ")
+    #         if len(games.loc[games['TEAM_ABBREVIATION'] == away_team]) == 0:
+    #             print("Away team does not exist. Try again.")
+    #         else:
+    #             away_exists = True
+    #     winner, proba = predict_winner(games, home_team, away_team, model)
+    #     print("Prediction: {} will win with {}% probability.".format(winner, proba*100))
         # con = input('Press 1 to continue, or 0 to exit: ')
