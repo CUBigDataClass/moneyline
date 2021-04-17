@@ -9,7 +9,7 @@ from boto3.dynamodb.conditions import Key
 import pandas as pd
 import numpy as np
 from feat_calc import *
-from put_prediction_data import *
+#from put_prediction_data import *
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
@@ -18,7 +18,7 @@ TABLE_NAME='nba'
 
 def query_games(year):
     #DON'T COMMIT WITH AWS KEYS!!!!
-    dynamo_conn = boto3.resource('dynamodb', region_name='us-west-2', aws_access_key_id='', aws_secret_access_key='')
+    dynamo_conn = boto3.resource('dynamodb', region_name='us-east-2', aws_access_key_id='AKIAU3SZVQWP2WJM3F76', aws_secret_access_key='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')
     table = dynamo_conn.Table(TABLE_NAME)
     scan_kwargs = {
         'FilterExpression': Key('GAME_DATE').begins_with(year)
@@ -128,7 +128,6 @@ if __name__=='__main__':
         if row['GAME_DATE'][:4] == '2021':
             if row['GAME_ID'] not in used_ids:
                 #print(row['MATCHUP'])
-
                 new_feats = extract_features_train(games, row['MATCHUP'], row['GAME_DATE'])
                 feat_dicts.append(new_feats)
                 used_ids.append(row['GAME_ID'])
@@ -149,7 +148,7 @@ if __name__=='__main__':
     # test_acc = test_model(model, X_test, y_test)
     # print(test_acc)
 
-    store_predict(games, model)
+    #store_predict(games, model)
 
     # home_exists = False
     # while not home_exists:
