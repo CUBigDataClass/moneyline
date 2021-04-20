@@ -3,7 +3,7 @@ from flask_restful import Resource, Api, reqparse
 import pandas as pd
 from prediction import query_games, train_model, extract_features_train, predict_winner
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
+#from sklearn.ensemble import RandomForestClassifier
 import requests
 from datetime import datetime
 
