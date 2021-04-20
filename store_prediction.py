@@ -16,20 +16,25 @@ def create_table():
         table_names = [table.name for table in dynamo_conn.tables.all()]
         if TABLE_NAME_PRED in table_names:
             table = dynamo_conn.Table(TABLE_NAME_PRED)
+            print("Table already exists. Deleting table and recreating...")
+            table.delete()
+            table.wait_until_not_exists()
         else:
-            table = dynamo_conn.create_table(
-                TableName=TABLE_NAME_PRED,
-                KeySchema=[
-                    {'AttributeName': 'MATCHUP_ID', 'KeyType': 'HASH'}
-                ],
-                AttributeDefinitions=[
-                    {'AttributeName': 'MATCHUP_ID', 'AttributeType': 'S'}
-                ],
-                ProvisionedThroughput={
-                    'ReadCapacityUnits': 1,
-                    'WriteCapacityUnits': 1
-                }
-            )
+            print("Table does not exist, creating now...")
+
+        table = dynamo_conn.create_table(
+            TableName=TABLE_NAME_PRED,
+            KeySchema=[
+                {'AttributeName': 'MATCHUP_ID', 'KeyType': 'HASH'}
+            ],
+            AttributeDefinitions=[
+                {'AttributeName': 'MATCHUP_ID', 'AttributeType': 'S'}
+            ],
+            ProvisionedThroughput={
+                'ReadCapacityUnits': 1,
+                'WriteCapacityUnits': 1
+            }
+        )
         table.wait_until_exists()
 
     except Exception as e:
@@ -37,8 +42,8 @@ def create_table():
 
     return table
 
-def insert_item(data):
-    table = create_table()
+def insert_item(table, data):
+    #table = create_table()
     response = table.put_item(
        Item=data
     )
@@ -83,35 +88,25 @@ if __name__=='__main__':
 
     #List of teams
     teams = games['TEAM_ABBREVIATION'].unique()
-
-    #Construct request to get today's games
-    # date = datetime.today()
-    # dt_string = str(date.strftime("%Y-%m-%d "))
-    # request_string = 'https://www.balldontlie.io/api/v1/games?start_date=' + dt_string + '&end_date=' + dt_string
-    # response = requests.get(request_string)
-
-    #From today's games, grab the home and away team abbreviation
-    # todays_games = response.json()
-    # todays_matchups = []
-    # for game in todays_games['data']:
-    #     todays_matchups.append((game['home_team']['abbreviation'], game['visitor_team']['abbreviation']))
     
+    #Create all possible home/away matchups
     matchups = []
     for team1 in teams:
         for team2 in teams:
             if team1 != team2:
                 matchups.append((team1, team2))
 
-    #For each of today's games, predict the winner and probability of that winner
+    #For each possible matchup, predict the winner and probability of that winner
     preds = []
     count = 0
+    pred_table = create_table()
     for matchup in matchups:
         winner, proba = predict_winner(games, matchup[0], matchup[1], model)
         #proba_dec = Decimal(proba)
         matchup_id = str(uuid.uuid4())
         pred = {'MATCHUP_ID': matchup_id, 'HOME_TEAM': matchup[0], 'AWAY_TEAM': matchup[1], 'WINNER': winner, 'PROBABILITY': str(proba)}
         # Insert 'pred' as row in dynamo table
-        insert_item(pred)
+        insert_item(pred_table, pred)
         count += 1
         if count % 25 == 0:
             print("Matchups inserted: {}".format(count))
