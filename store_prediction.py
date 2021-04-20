@@ -4,6 +4,7 @@ from sklearn.model_selection import train_test_split
 import requests
 from datetime import datetime
 import boto3
+import uuid
 #from decimal import Decimal
 
 dynamo_conn = boto3.resource('dynamodb', region_name='us-east-2', aws_access_key_id='AKIAU3SZVQWPSL73LGUJ', aws_secret_access_key='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')
@@ -19,10 +20,10 @@ def create_table():
             table = dynamo_conn.create_table(
                 TableName=TABLE_NAME_PRED,
                 KeySchema=[
-                    {'AttributeName': 'HOME_TEAM', 'KeyType': 'HASH'}
+                    {'AttributeName': 'MATCHUP_ID', 'KeyType': 'HASH'}
                 ],
                 AttributeDefinitions=[
-                    {'AttributeName': 'HOME_TEAM', 'AttributeType': 'S'}
+                    {'AttributeName': 'MATCHUP_ID', 'AttributeType': 'S'}
                 ],
                 ProvisionedThroughput={
                     'ReadCapacityUnits': 1,
@@ -80,26 +81,41 @@ if __name__=='__main__':
     #Delete predicitons table so we can recreate it and fill it with current predictions
     #delete_table()
 
+    #List of teams
+    teams = games['TEAM_ABBREVIATION'].unique()
+
     #Construct request to get today's games
-    date = datetime.today()
-    dt_string = str(date.strftime("%Y-%m-%d "))
-    request_string = 'https://www.balldontlie.io/api/v1/games?start_date=' + dt_string + '&end_date=' + dt_string
-    response = requests.get(request_string)
+    # date = datetime.today()
+    # dt_string = str(date.strftime("%Y-%m-%d "))
+    # request_string = 'https://www.balldontlie.io/api/v1/games?start_date=' + dt_string + '&end_date=' + dt_string
+    # response = requests.get(request_string)
 
     #From today's games, grab the home and away team abbreviation
-    todays_games = response.json()
-    todays_matchups = []
-    for game in todays_games['data']:
-        todays_matchups.append((game['home_team']['abbreviation'], game['visitor_team']['abbreviation']))
+    # todays_games = response.json()
+    # todays_matchups = []
+    # for game in todays_games['data']:
+    #     todays_matchups.append((game['home_team']['abbreviation'], game['visitor_team']['abbreviation']))
+    
+    matchups = []
+    for team1 in teams:
+        for team2 in teams:
+            if team1 != team2:
+                matchups.append((team1, team2))
 
     #For each of today's games, predict the winner and probability of that winner
     preds = []
-    for matchup in todays_matchups:
+    count = 0
+    for matchup in matchups:
         winner, proba = predict_winner(games, matchup[0], matchup[1], model)
         #proba_dec = Decimal(proba)
-        pred = {'HOME_TEAM': matchup[0], 'AWAY_TEAM': matchup[1], 'WINNER': winner, 'PROBABILITY': str(proba)}
+        matchup_id = str(uuid.uuid4())
+        pred = {'MATCHUP_ID': matchup_id, 'HOME_TEAM': matchup[0], 'AWAY_TEAM': matchup[1], 'WINNER': winner, 'PROBABILITY': str(proba)}
         # Insert 'pred' as row in dynamo table
         insert_item(pred)
+        count += 1
+        if count % 25 == 0:
+            print("Matchups inserted: {}".format(count))
         #preds.append((winner, proba))
     
+    print("Matchups inserted: {}".format(count))
     print("Complete")
