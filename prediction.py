@@ -20,6 +20,7 @@ def query_games(year):
     #DON'T COMMIT WITH AWS KEYS!!!!
     dynamo_conn = boto3.resource('dynamodb', region_name='us-east-2', aws_access_key_id='AKIAU3SZVQWPSL73LGUJ', aws_secret_access_key='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')
     table = dynamo_conn.Table(TABLE_NAME)
+
     scan_kwargs = {
         'FilterExpression': Key('GAME_DATE').begins_with(year)
         # 'ProjectionExpression': "#yr, title, info.rating",
@@ -34,6 +35,7 @@ def query_games(year):
         #display_movies(response.get('Items', []))
         start_key = response.get('LastEvaluatedKey', None)
         done = start_key is None
+        
     game_data = pd.DataFrame(response['Items'])
     game_data['IS_HOME'] = np.where(game_data['MATCHUP'].str.contains('@'), False, True)
     return game_data
