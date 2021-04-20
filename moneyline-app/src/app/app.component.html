@@ -1,9 +1,28 @@
-<!-- <div style= "width: 50vh;">
-<app-matchup [team1] = "'nuggets'" [team2] = "'celtics'"></app-matchup>
-</div> -->
 <mat-toolbar>
-    <span class="gap"><h1>Moneyline NBA Games</h1></span>
-    <button mat-raised-button><h1>Predict</h1></button>
+    <mat-toolbar-row style="height: 12vh;">
+    <span class="gap"><h1>Today's NBA Games</h1></span>
+    <span class="spacer"></span>
+    <h1>Make your own matchup:   </h1>
+    <span class = "shorten"> 
+    <mat-form-field appearance="fill"   >
+        <mat-label>Home Team</mat-label>
+        <mat-select [(ngModel)] = "homeTeam" >
+          <mat-option *ngFor="let team of options" [value]="team">
+            {{team}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Away Team</mat-label>
+        <mat-select [(ngModel)] = "awayTeam" >
+          <mat-option *ngFor="let team of options" [value]="team">
+            {{team}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    <button mat-raised-button (click)= "prediction(homeTeam,awayTeam)"><h1>Predict</h1></button>
+</span>
+</mat-toolbar-row>
 </mat-toolbar>
 <div *ngIf = "todayGames.length > 0">
     <div *ngFor = "let g of todayGames">
@@ -11,6 +30,6 @@
         [team1score] = g.home_team_score
         [team2score] = g.visitor_team_score
         [status] = g.status
-        (click)="prediction()"></app-matchup>
+        (click)="prediction(g.home_team.abbreviation,g.visitor_team.abbreviation)"></app-matchup>
     </div>
 </div> 

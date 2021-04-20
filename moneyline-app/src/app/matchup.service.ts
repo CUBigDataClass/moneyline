@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient , HttpParams} from '@angular/common/http';
-import { ThrowStmt } from '@angular/compiler';
 
 interface info {
   current_page: Number;
@@ -62,14 +61,10 @@ export class MatchupService {
   
    }
 
-  async getPrediction(){
-    // const url = 'enter api in here'
-    // const res = await this.http.get<
-    const url = 'get'
-    const res = await this.http.get<res>(url).toPromise();
-
-    return res;
-    return {team1: "DEN", team2: "TOR", confidence: 0.7, winner: "DEN"}
+  async getPrediction(home: String ,away: String ){
+    const url = 'get/'+home+'/'+away;
+    const res:any = await this.http.get<res>(url).toPromise();
+    return res[0];
   }
   }
 
