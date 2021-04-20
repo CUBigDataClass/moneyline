@@ -38,6 +38,7 @@ def query_games(year):
     game_data['IS_HOME'] = np.where(game_data['MATCHUP'].str.contains('@'), False, True)
     return game_data
     #return pd.DataFrame(response['Items'])
+    
 def extract_features_train(df, matchup, date):
     #create feature vector given team names
     if '@' in matchup:
@@ -60,8 +61,8 @@ def extract_features_train(df, matchup, date):
         'PPG_AWAY': avg_ppg(away_past),
         'FG_PCT_HOME': avg_fg_pct(home_past), #Field goal percentage
         'FG_PCT_AWAY': avg_fg_pct(away_past),
-        # 'FT_PCT_HOME': avg_ft_pct(home_past), #Free throw percentage
-        # 'FT_PCT_AWAY': avg_ft_pct(away_past),
+        'FT_PCT_HOME': avg_ft_pct(home_past), #Free throw percentage
+        'FT_PCT_AWAY': avg_ft_pct(away_past),
         'RBPG_HOME': avg_rbpg(home_past), #Rebounds per game
         'RBPG_AWAY': avg_rbpg(away_past),
         'FORM_HOME': team_form(home_past), #Team's recent preformances
