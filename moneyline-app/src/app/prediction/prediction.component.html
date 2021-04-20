@@ -1,0 +1,50 @@
+
+<mat-card>
+    <mat-card-content>
+        <div class="row">
+            <div class="column">
+                <mat-card-title>{{team1}}</mat-card-title>
+                <br>
+                <mat-icon svgIcon= {{team1}} style="transform: scale(4);"></mat-icon>
+            </div>
+            <div class="column">
+                <mat-card-subtitle>Probability</mat-card-subtitle>
+                <br>
+                <mat-card-title>{{getProb(team1)}}</mat-card-title>
+            </div>
+            <div class="column">
+                <mat-card-subtitle>Moneyline</mat-card-subtitle>
+                <br>
+                <mat-card-title>{{getLines(team1)}}</mat-card-title>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<br>
+
+<mat-card>
+    <mat-card-content>
+        <div class="row">
+            <div class="column">
+                <mat-card-title>{{team2}}</mat-card-title>
+                <br>
+                <mat-icon svgIcon= {{team2}} style="transform: scale(4);"></mat-icon>
+            </div>
+            <div class="column">
+                <mat-card-subtitle>Probability</mat-card-subtitle>
+                <br>
+                <mat-card-title>{{getProb(team2)}}</mat-card-title>
+            </div>
+            <div class="column">
+                <mat-card-subtitle>Moneyline</mat-card-subtitle>
+                <br>
+                <mat-card-title>{{getLines(team2)}}</mat-card-title>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

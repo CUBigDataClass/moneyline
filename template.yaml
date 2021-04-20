@@ -1,0 +1,68 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: AWS SAM for Moneyline
+Resources:
+  # API Gateway
+  MoneylineAPI:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: dev
+      Auth:
+        ApiKeyRequired: false
+      DefinitionBody:
+        swagger: 2.0
+        info:
+          title: moneyline-sam
+        x-amazon-apigateway-request-validators:
+          Validate body:
+            validateRequestBody: false
+            validateRequestParameters: false
+        x-amazon-apigateway-binary-media-types:
+          - '*/*'
+        definitions:
+          Empty:
+            type: "object"
+            title: "Empty Schema"
+        paths:
+          /predictions:
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri:
+                  !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${MoneylineSamLambda.Arn}/invocations
+              responses:
+                "200":
+                  description: "200 response"
+                  schema:
+                    $ref: "#/definitions/Empty"
+                  headers:
+                    Access-Control-Allow-Origin:
+                      type: "string"
+
+  # Lambda
+  MoneylineSamLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub MoneylineSamLambda
+      Runtime: python3.8
+      CodeUri: APIFunction/
+      Handler: lambda_function.lambda_handler
+      MemorySize: 128
+      Timeout: 180
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AmazonDynamoDBFullAccess
+      Events:
+        MyEndpoint:
+          Type: Api
+          Properties:
+            Path: /predictions
+            Method: post
+            RestApiId:
+              Ref: MoneylineAPI
+
+Outputs:
+  ApiGWURL:
+    Value: !Sub https://${MoneylineAPI}.execute-api.${AWS::Region}.amazonaws.com/dev/predictions
+    Description: API Gateway endpoint

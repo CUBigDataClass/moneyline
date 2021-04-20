@@ -35,7 +35,6 @@ def create_table():
 
     return table
 
-
 def insert_item(table, data):
 
     try:
@@ -97,6 +96,13 @@ def get_team_name(games):
     return team_name
 
 def store_predict(games, model):
+    """
+    create a DB where primary key is home_team. For each row is the home team and column is the away team.
+    ex: for row ATL and Column BKN, ATL has a probability of 0.473 to win against BKN
+    :param games:
+    :param model:
+    :return:
+    """
     # start = time.time()
     table = create_table()
     teams = get_team_name(games)
@@ -108,7 +114,6 @@ def store_predict(games, model):
                 winner, proba = home_team, 1
             else:
                 winner, proba = predict_winner(games, home_team, away_team, model)
-
             # print("Prediction: {} will win with {}% probability.".format(winner, proba * 100))
             if winner != home_team:
                 proba = 1 - proba
