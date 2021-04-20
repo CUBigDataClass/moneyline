@@ -7,8 +7,8 @@ from sklearn.ensemble import RandomForestClassifier
 import requests
 from datetime import datetime
 
-app = Flask(__name__)
-api = Api(app)
+application = Flask(__name__)
+api = Api(application)
 
 class Predictions(Resource):    
     def get(self):
@@ -61,4 +61,4 @@ class Predictions(Resource):
 api.add_resource(Predictions, '/get')
 
 if __name__ == '__main__':
-    app.run(debug=True, port=4822)
+    application.run(debug=True)
