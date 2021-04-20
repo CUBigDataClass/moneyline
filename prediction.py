@@ -11,7 +11,8 @@ import numpy as np
 from feat_calc import *
 #from put_prediction_data import *
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
+#from sklearn.ensemble import RandomForestClassifier
+from sklearn import svm
 from sklearn.metrics import accuracy_score
 
 TABLE_NAME='nba'
@@ -97,7 +98,8 @@ def extract_features_predict(df, home, away):
 
 def train_model(X, y):
     #return a trained classifier
-    clf = RandomForestClassifier(n_estimators=1000, random_state=42)
+    #clf = RandomForestClassifier(n_estimators=1000, random_state=42)
+    clf = svm.SVC(kernel = 'linear', gamma = 'scale', probability= True)
     clf.fit(X, y)
     return clf
 
@@ -112,6 +114,6 @@ def predict_winner(df, home, away, clf_trained):
     pred = clf_trained.predict([feats])
     pred_proba = clf_trained.predict_proba([feats])
     if pred:
-        return home, pred_proba[0][1]
+        return home, round(pred_proba[0][1],3)
     else:
-        return away, pred_proba[0][0]
+        return away, round(pred_proba[0][0], 3)

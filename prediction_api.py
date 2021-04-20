@@ -10,7 +10,7 @@ from datetime import datetime
 application = Flask(__name__)
 api = Api(application)
 
-class Predictions(Resource):    
+class Predictions(Resource):
     def get(self):
         #query games from 2020 and 2021 for training data
         games20 = query_games('2020')
