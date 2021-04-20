@@ -40,13 +40,14 @@ def query_games(year):
     game_data['IS_HOME'] = np.where(game_data['MATCHUP'].str.contains('@'), False, True)
     return game_data
     #return pd.DataFrame(response['Items'])
-    
+
 def extract_features_train(df, matchup, date):
     #create feature vector given team names
     if '@' in matchup:
         matchup_v2 = matchup[-3:] + ' vs. ' + matchup[:3]
     else:
         matchup_v2 = matchup[-3:] + ' @ ' + matchup[:3]
+
     game = df.loc[(df['GAME_DATE'] == date) & ((df['MATCHUP'] == matchup) | (df['MATCHUP'] == matchup_v2))]    
     home = game.loc[game['IS_HOME'] == True]
     away = game.loc[game['IS_HOME'] == False]
@@ -54,10 +55,12 @@ def extract_features_train(df, matchup, date):
     home_past = df.loc[(df['GAME_DATE'] < date) & (df['TEAM_NAME'] == home_str)]
     away_str = list(away['TEAM_NAME'])[0]
     away_past = df.loc[(df['GAME_DATE'] < date) & (df['TEAM_NAME'] == away_str)]
+
     if list(home['WL'])[0] == 'W':
         label = 1
     else:
         label = 0
+
     feat_dict = {
         'PPG_HOME': avg_ppg(home_past), #Points per game
         'PPG_AWAY': avg_ppg(away_past),
@@ -92,6 +95,7 @@ def extract_features_predict(df, home, away):
         team_form(away_past),
     ]
     return feat_list
+    
 def train_model(X, y):
     #return a trained classifier
     #clf = RandomForestClassifier(n_estimators=1000, random_state=42)
