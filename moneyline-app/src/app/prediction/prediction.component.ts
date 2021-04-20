@@ -21,11 +21,13 @@ export class PredictionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let res = this.matchupService.getPrediction()
-    this.team1 = res.team1
-    this.team2 = res.team2
-    this.confidence = res.confidence
-    this.winner = res.winner
+    this.matchupService.getPrediction().then(res=>{
+      console.log(res)});
+
+    // this.team1 = res.team1
+    // this.team2 = res.team2
+    // this.confidence = res.confidence
+    // this.winner = res.winner
   }
 
   getProb(team: String){

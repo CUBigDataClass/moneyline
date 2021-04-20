@@ -58,14 +58,17 @@ export class MatchupService {
     let params = new HttpParams().set('start_date', todayStr ).set('end_date', todayStr );
     const url = 'api/games';
     const res = await this.http.get<res>(url, {params:params} ).toPromise();
-    console.log(res);
     return res.data;
   
    }
 
-  getPrediction(){
+  async getPrediction(){
     // const url = 'enter api in here'
     // const res = await this.http.get<
+    const url = 'get'
+    const res = await this.http.get<res>(url).toPromise();
+
+    return res;
     return {team1: "DEN", team2: "TOR", confidence: 0.7, winner: "DEN"}
   }
   }
