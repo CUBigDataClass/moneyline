@@ -3,6 +3,7 @@ import { IconService } from './icon.service';
 import { MatchupService } from './matchup.service';
 import {MatDialog, MatDialogConfig, MatDialogModule} from '@angular/material/dialog';
 import { PredictionComponent } from './prediction/prediction.component';
+import { CalculatorComponent } from './calculator/calculator.component';
 
 
 @Component({
@@ -53,6 +54,11 @@ export class AppComponent {
   };
     dialogConfig.width = '600px';
     this.dialog.open(PredictionComponent, dialogConfig);
+  }
+  calculator(){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '600px';
+    this.dialog.open(CalculatorComponent, dialogConfig);
   }
 }
 
