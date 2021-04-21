@@ -1,0 +1,21 @@
+---
+- name: Setup frontend
+  hosts: localhost
+  tasks:
+  - name: Install git 
+    apt:
+      name: git
+      state: present
+
+  - name: Install nginx
+    apt:
+      name: nginx
+      state: present
+
+  - name: Clone moneyline repo
+    ansible.builtin.git:
+      repo: https://github.com/CUBigDataClass/moneyline.git
+      dest: /var/www
+
+  - name: Setup nginx configs and deploy
+    command: sudo bash /var/www/moneyline/moneyline-app/config.sh
