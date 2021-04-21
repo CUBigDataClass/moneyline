@@ -9,7 +9,7 @@ echo  "server {
     location / {
         # First attempt to server request as file, then
         # as directory, then fall back to displaying a 404.
-        try_files $uri $uri/ /index.html =404;
+        try_files \$uri \$uri/ /index.html =404;
     }
     location /api {
        proxy_pass https://balldontlie.io/api/v1/;
