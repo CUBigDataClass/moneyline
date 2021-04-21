@@ -2,9 +2,10 @@
     <mat-toolbar-row style="height: 12vh;">
     <span class="gap"><h1>Today's NBA Games</h1></span>
     <span class="spacer"></span>
-    <h1>Make your own matchup:   </h1>
+    <span class="gap"><h1>Make your own matchup:</h1></span>
     <span class = "shorten"> 
-    <mat-form-field appearance="fill"   >
+    <span class="gap">
+    <mat-form-field appearance="fill">
         <mat-label>Home Team</mat-label>
         <mat-select [(ngModel)] = "homeTeam" >
           <mat-option *ngFor="let team of options" [value]="team">
@@ -20,6 +21,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+    </span>
     <button mat-raised-button (click)= "prediction(homeTeam,awayTeam)"><h1>Predict</h1></button>
 </span>
 </mat-toolbar-row>
