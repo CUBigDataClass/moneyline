@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Inject } from '@angular/core';
+import { Component,  OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatchupService } from '../matchup.service';
 
 @Component({
@@ -16,16 +19,28 @@ export class PredictionComponent implements OnInit {
 
   winner!: String;
 
-  constructor(private matchupService : MatchupService) {
+  data
+
+  res : any
+
+  constructor(
+    private matchupService : MatchupService,
+    private dialogRef: MatDialogRef<PredictionComponent>,
+        @Inject(MAT_DIALOG_DATA) data : any
+    ) {
+      
+      this.data = data;
 
   }
 
   ngOnInit(): void {
-    let res = this.matchupService.getPrediction()
-    this.team1 = res.team1
-    this.team2 = res.team2
-    this.confidence = res.confidence
-    this.winner = res.winner
+    this.matchupService.getPrediction(this.data['home'], this.data['away']).then(res=>{
+      this.res = res;
+      this.team1 = this.res['HOME_TEAM'];
+      this.team2 = this.res['AWAY_TEAM'];
+      this.confidence = this.res['PROBABILITY'];
+      this.winner = this.res['WINNER'];
+    });
   }
 
   getProb(team: String){

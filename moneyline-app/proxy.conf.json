@@ -7,5 +7,11 @@
     "pathRewrite": {
       "^/api": ""
     }
+  },
+  "/get":{
+    "target": "http://moneyline-flask-env.eba-c2pzpmqb.us-east-2.elasticbeanstalk.com",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
   }
 }
