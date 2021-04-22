@@ -5,10 +5,11 @@
 </mat-toolbar>
 <mat-sidenav-container class="example-container">
   <mat-sidenav #sidenav mode="side" >
-    <div>
+    <br>
+    <div class="leftspace">
       <button mat-raised-button color="warn" (click)= "calculator()">Profit Calculator</button>
     </div>
-    <br><br>
+    <br>
     <div>
       <div>
       <mat-form-field  appearance="fill" >
@@ -36,7 +37,7 @@
         </mat-select>
       </mat-form-field>
     </div>
-      <div>
+      <div class="leftspace">
     <button mat-raised-button color="warn" (click)= "prediction(homeTeam,awayTeam,homeBias)">Predict</button>
   </div>
     </div>

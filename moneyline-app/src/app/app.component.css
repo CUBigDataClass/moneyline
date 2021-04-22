@@ -5,3 +5,7 @@
 .spacer {
     flex: 1 1 auto;
   }
+
+.leftspace {
+    margin-left: 5%;
+}
