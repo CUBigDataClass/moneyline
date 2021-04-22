@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IconService } from './icon.service';
 import { MatchupService } from './matchup.service';
 import {MatDialog, MatDialogConfig, MatDialogModule} from '@angular/material/dialog';
@@ -35,6 +35,7 @@ export class AppComponent {
 
   title = 'moneyline-app';
 
+  interval
 
   constructor(
     private iconService: IconService,
@@ -46,7 +47,13 @@ export class AppComponent {
     this.matchupService.getGames().then((games)=>{
       this.todayGames = games;
     }).catch(err => console.log(err));
+    this.interval = setInterval(()=> {
+      this.matchupService.getGames().then((games)=>{
+        this.todayGames = games;
+      }).catch(err => console.log(err));
+    }, 30000);
   }
+
   prediction(team1:String,team2:String,bias:number){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
@@ -57,6 +64,8 @@ export class AppComponent {
     dialogConfig.width = '600px';
     this.dialog.open(PredictionComponent, dialogConfig);
   }
+
+
   calculator(){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '600px';
