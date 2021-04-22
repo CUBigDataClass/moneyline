@@ -2,7 +2,10 @@
 Team Moneyline sports betting app.
 
 
-## If you want to set up local version:
+## To set up:
+
+
+### Create and populate database
 - Make sure pip3 and python3 are installed on your system
 
 - Install ansible:
@@ -23,6 +26,22 @@ sudo pip install ansible
 ```
 ansible-playbook playbook.yml
 ```
+
+### Deploy Frontend
+- Create Ubuntu Amazon EC2 instance with security rules allowing inbound http traffic on port 80
+
+- ssh into your ec2 instance and preform following commands
+
+```
+sudo apt-get update
+sudo apt-get install -y git
+sudo apt-get install -y nginx
+cd /var/www
+sudo git clone https://github.com/CUBigDataClass/moneyline.git
+sudo bash moneyline/moneyline-app/config.sh
+```
+
+- Navigate to your ec2's domain in browser
 
 
 
