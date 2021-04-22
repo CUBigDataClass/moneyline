@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CalculatorComponent implements OnInit {
 
+  line = 100;
+  bet = 0;
   constructor() { }
 
   ngOnInit(): void {
