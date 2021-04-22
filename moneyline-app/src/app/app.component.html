@@ -5,6 +5,14 @@
     <span class="gap">
       <button mat-raised-button color="warn" (click)= "calculator()"><h1>Profit Calculator</h1></button>
     </span>
+    <span class="shorten">
+    <span class="gap">
+      <mat-form-field appearance="fill">
+        <mat-label>Home Bias</mat-label>
+        <input matInput type="number" [(ngModel)] = "homeBias">
+      </mat-form-field>
+    </span>
+    </span>
     <span class="gap"><h1>Make your own matchup:</h1></span>
     <span class = "shorten"> 
     <span class="gap">
