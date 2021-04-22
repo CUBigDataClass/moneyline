@@ -10,8 +10,13 @@
     <input matInput type="number" [(ngModel)]="bet">
 </mat-form-field>
 </span>
-<button mat-raised-button color="warn">Calculate</button>
+<button mat-raised-button color="warn" (click)="calc_profit()">Calculate</button>
 
+<br>
+
+<mat-card>
+<h2>Potential Profit: {{profit}}</h2>
+</mat-card>
 <mat-dialog-actions>
     <button mat-button mat-dialog-close>Close</button>
 </mat-dialog-actions>
