@@ -32,6 +32,7 @@ export class AppComponent {
   homeTeam : String = 'DEN';
   awayTeam : String = 'LAL';
   homeBias : number = 0;
+  opened: boolean = false;
 
   title = 'moneyline-app';
 

@@ -20,6 +20,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { CalculatorComponent } from './calculator/calculator.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { CalculatorComponent } from './calculator/calculator.component';
     MatOptionModule,
     MatSelectModule,
     FormsModule,
-    MatInputModule
+    MatInputModule,
+    MatSidenavModule
   ],
   providers: [
     IconService,

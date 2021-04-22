@@ -1,22 +1,23 @@
-<mat-toolbar>
-    <mat-toolbar-row style="height: 12vh;">
-    <span class="gap"><h1>Today's NBA Games</h1></span>
-    <span class="spacer"></span>
-    <span class="gap">
-      <button mat-raised-button color="warn" (click)= "calculator()"><h1>Profit Calculator</h1></button>
-    </span>
-    <span class="shorten">
-    <span class="gap">
-      <mat-form-field appearance="fill">
+<mat-toolbar >
+  <mat-toolbar-row>
+  <span class="gap"><h1>Today's NBA Games</h1></span>
+</mat-toolbar-row>
+</mat-toolbar>
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #sidenav mode="side" >
+    <div>
+      <button mat-raised-button color="warn" (click)= "calculator()">Profit Calculator</button>
+    </div>
+    <br><br>
+    <div>
+      <div>
+      <mat-form-field  appearance="fill" >
         <mat-label>Home Bias</mat-label>
         <input matInput type="number" [(ngModel)] = "homeBias">
       </mat-form-field>
-    </span>
-    </span>
-    <span class="gap"><h1>Make your own matchup:</h1></span>
-    <span class = "shorten"> 
-    <span class="gap">
-    <mat-form-field appearance="fill">
+    </div>
+    <div>
+    <mat-form-field appearance="fill" >
         <mat-label>Home Team</mat-label>
         <mat-select [(ngModel)] = "homeTeam" >
           <mat-option *ngFor="let team of options" [value]="team">
@@ -24,7 +25,9 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field appearance="fill">
+    </div>
+    <div>
+      <mat-form-field appearance="fill" >
         <mat-label>Away Team</mat-label>
         <mat-select [(ngModel)] = "awayTeam" >
           <mat-option *ngFor="let team of options" [value]="team">
@@ -32,17 +35,24 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-    </span>
-</span>
-<button mat-raised-button color="warn" (click)= "prediction(homeTeam,awayTeam,homeBias)"><h1>Predict</h1></button>
-</mat-toolbar-row>
-</mat-toolbar>
-<div *ngIf = "todayGames.length > 0">
-    <div *ngFor = "let g of todayGames">
-        <app-matchup [team1] = g.home_team.abbreviation [team2] = g.visitor_team.abbreviation
-        [team1score] = g.home_team_score
-        [team2score] = g.visitor_team_score
-        [status] = g.status
-        (click)="prediction(g.home_team.abbreviation,g.visitor_team.abbreviation,homeBias)"></app-matchup>
     </div>
-</div> 
+      <div>
+    <button mat-raised-button color="warn" (click)= "prediction(homeTeam,awayTeam,homeBias)">Predict</button>
+  </div>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <p><button mat-button (click)="sidenav.toggle()">Create own prediction & Profit Caclulator</button></p>
+    <div style="width: 90vw; margin: auto;">
+      <div *ngIf = "todayGames.length > 0">
+          <div *ngFor = "let g of todayGames">
+              <app-matchup [team1] = g.home_team.abbreviation [team2] = g.visitor_team.abbreviation
+              [team1score] = g.home_team_score
+              [team2score] = g.visitor_team_score
+              [status] = g.status
+              (click)="prediction(g.home_team.abbreviation,g.visitor_team.abbreviation,homeBias)"></app-matchup>
+          </div>
+      </div> 
+      </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
