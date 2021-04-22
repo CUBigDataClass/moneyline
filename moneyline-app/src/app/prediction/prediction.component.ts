@@ -58,8 +58,26 @@ export class PredictionComponent implements OnInit {
     if (p > 0.5){
       return ((-100 / (1/p - 1)) - this.data['bias']).toFixed(0)
     }
-    else{
+    else if (p < 0.5){
       return "+" + ((100 * (1/p - 1)) - this.data['bias']).toFixed(0)
+    }
+    else {
+      if (team === this.team1){
+        if (this.data['bias'] < 0){
+          return "+" + (100).toFixed(0)
+        }
+        else{
+          return (-100 - this.data['bias']).toFixed(0)
+        }
+      }
+      else{
+        if (this.data['bias'] < 0){
+          return (-100 + this.data['bias']).toFixed(0)
+        }
+        else{
+          return "+" + (100).toFixed(0)
+        }
+      }
     }
   }
 
