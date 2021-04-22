@@ -3,7 +3,7 @@
     <span class="gap"><h1>Today's NBA Games</h1></span>
     <span class="spacer"></span>
     <span class="gap">
-      <button mat-raised-button (click)= "calculator()"><h1>Profit Calculator</h1></button>
+      <button mat-raised-button color="warn" (click)= "calculator()"><h1>Profit Calculator</h1></button>
     </span>
     <span class="gap"><h1>Make your own matchup:</h1></span>
     <span class = "shorten"> 
@@ -26,7 +26,7 @@
       </mat-form-field>
     </span>
 </span>
-<button mat-raised-button (click)= "prediction(homeTeam,awayTeam)"><h1>Predict</h1></button>
+<button mat-raised-button color="warn" (click)= "prediction(homeTeam,awayTeam)"><h1>Predict</h1></button>
 </mat-toolbar-row>
 </mat-toolbar>
 <div *ngIf = "todayGames.length > 0">

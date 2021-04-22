@@ -4,7 +4,14 @@
     <input matInput type="number" [(ngModel)]="line">
 </mat-form-field>
 </span>
+<span class="gap">
 <mat-form-field appearance="fill">
     <mat-label>Bet</mat-label>
     <input matInput type="number" [(ngModel)]="bet">
 </mat-form-field>
+</span>
+<button mat-raised-button color="warn">Calculate</button>
+
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>
