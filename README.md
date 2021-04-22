@@ -1,5 +1,5 @@
 # moneyline
-Team Moneyline sports betting app.
+Team Moneyline sports betting website that allows users to see the matchups of the day and our predictions on who will win the game. Users also have the ability to create their own matchups as well as use a profit calculator.
 
 
 ## To set up:
