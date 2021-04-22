@@ -31,6 +31,7 @@ export class AppComponent {
 
   homeTeam : String = 'DEN';
   awayTeam : String = 'LAL';
+  homeBias : number = 0;
 
   title = 'moneyline-app';
 
@@ -46,11 +47,12 @@ export class AppComponent {
       this.todayGames = games;
     }).catch(err => console.log(err));
   }
-  prediction(team1:String,team2:String){
+  prediction(team1:String,team2:String,bias:number){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       home: team1,
-      away: team2
+      away: team2,
+      bias: bias
   };
     dialogConfig.width = '600px';
     this.dialog.open(PredictionComponent, dialogConfig);

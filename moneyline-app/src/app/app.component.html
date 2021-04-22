@@ -26,7 +26,7 @@
       </mat-form-field>
     </span>
 </span>
-<button mat-raised-button color="warn" (click)= "prediction(homeTeam,awayTeam)"><h1>Predict</h1></button>
+<button mat-raised-button color="warn" (click)= "prediction(homeTeam,awayTeam,homeBias)"><h1>Predict</h1></button>
 </mat-toolbar-row>
 </mat-toolbar>
 <div *ngIf = "todayGames.length > 0">
@@ -35,6 +35,6 @@
         [team1score] = g.home_team_score
         [team2score] = g.visitor_team_score
         [status] = g.status
-        (click)="prediction(g.home_team.abbreviation,g.visitor_team.abbreviation)"></app-matchup>
+        (click)="prediction(g.home_team.abbreviation,g.visitor_team.abbreviation,homeBias)"></app-matchup>
     </div>
 </div> 

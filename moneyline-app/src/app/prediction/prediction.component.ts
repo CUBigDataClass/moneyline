@@ -53,20 +53,14 @@ export class PredictionComponent implements OnInit {
   }
 
   getLines(team: String){
-    var p
-
-    if (team === this.winner){
-      p = this.confidence.valueOf()
-    }
-    else{
-      p = 1 - this.confidence.valueOf()
-    }
+    var p = (team === this.winner) ? this.confidence.valueOf() : 1 - this.confidence.valueOf()
+    var b = (team === this.team1) ? this.data['bias'] : -this.data['bias']
 
     if (p > 0.5){
-      return (-100 / (1/p - 1)).toFixed(0)
+      return ((-100 / (1/p - 1)) - this.data['bias']).toFixed(0)
     }
     else{
-      return "+" + (100 * (1/p - 1)).toFixed(0)
+      return "+" + ((100 * (1/p - 1)) - this.data['bias']).toFixed(0)
     }
   }
 
