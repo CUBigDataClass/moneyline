@@ -56,10 +56,10 @@ export class PredictionComponent implements OnInit {
     var p = (team === this.winner) ? this.confidence.valueOf() : 1 - this.confidence.valueOf()
 
     if (p > 0.5){
-      return ((-100 / (1/p - 1)) - this.data['bias']).toFixed(0)
+      return Math.min((-100 / (1/p - 1)) - this.data['bias'], -100).toFixed(0)
     }
     else if (p < 0.5){
-      return "+" + ((100 * (1/p - 1)) - this.data['bias']).toFixed(0)
+      return "+" + Math.max((100 * (1/p - 1)) - this.data['bias'], 100).toFixed(0)
     }
     else {
       if (team === this.team1){
