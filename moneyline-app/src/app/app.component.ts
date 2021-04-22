@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IconService } from './icon.service';
 import { MatchupService } from './matchup.service';
 import {MatDialog, MatDialogConfig, MatDialogModule} from '@angular/material/dialog';
 import { PredictionComponent } from './prediction/prediction.component';
+import { CalculatorComponent } from './calculator/calculator.component';
 
 
 @Component({
@@ -30,9 +31,12 @@ export class AppComponent {
 
   homeTeam : String = 'DEN';
   awayTeam : String = 'LAL';
+  homeBias : number = 0;
+  opened: boolean = false;
 
   title = 'moneyline-app';
 
+  interval
 
   constructor(
     private iconService: IconService,
@@ -44,15 +48,29 @@ export class AppComponent {
     this.matchupService.getGames().then((games)=>{
       this.todayGames = games;
     }).catch(err => console.log(err));
+    this.interval = setInterval(()=> {
+      this.matchupService.getGames().then((games)=>{
+        this.todayGames = games;
+      }).catch(err => console.log(err));
+    }, 30000);
   }
-  prediction(team1:String,team2:String){
+
+  prediction(team1:String,team2:String,bias:number){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       home: team1,
-      away: team2
+      away: team2,
+      bias: bias
   };
     dialogConfig.width = '600px';
     this.dialog.open(PredictionComponent, dialogConfig);
+  }
+
+
+  calculator(){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '600px';
+    this.dialog.open(CalculatorComponent, dialogConfig);
   }
 }
 

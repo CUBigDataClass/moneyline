@@ -5,10 +5,3 @@
 .spacer {
     flex: 1 1 auto;
   }
-
-.shorten {
-    display: inline-block;
-    vertical-align: middle;
-    line-height: normal;
-    height: 60%
-  }
