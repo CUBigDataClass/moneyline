@@ -7,7 +7,7 @@ import boto3
 import uuid
 #from decimal import Decimal
 
-dynamo_conn = boto3.resource('dynamodb', region_name='us-east-2', aws_access_key_id='AKIAU3SZVQWPSL73LGUJ', aws_secret_access_key='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')
+dynamo_conn = boto3.resource('dynamodb', region_name='us-east-2', aws_access_key_id='', aws_secret_access_key='')
 
 TABLE_NAME_PRED = 'game_predictions'
 
